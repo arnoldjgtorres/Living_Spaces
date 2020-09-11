@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+
+    <!--<link rel="stylesheet" href="styles.css" />-->
+    <title>Arnold Torres Code Challenge</title>
+
+    <style>
+      * {
+        margin: 0;
+      }
+
+      header {
+        background-color: #333;
+      }
+
+      header img {
+        margin: 1em;
+      }
+
+      main {
+        background-color: #ececec;
+      }
+
+      .flex-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 10px 0 10px 0;
+      }
+
+      .content {
+        padding: 1em;
+      }
+
+      #browse ul {
+        white-space: nowrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      #browse ul li {
+        margin: 20px 0 20px 0;
+      }
+
+      #slider-container {
+        background-color: #333;
+        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #slider {
+        padding-top: 10px;
+        max-width: 1140px;
+        margin: 0 5em 0 5em;
+      }
+      #slider img {
+        margin: 10px;
+      }
+
+      footer {
+        background-color: #fff;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 10px;
+      }
+
+      @media only screen and (max-width: 1240px) {
+        #slider {
+          width: 85%;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        header {
+          text-align: center;
+        }
+        header img {
+          transform: scale(0.65);
+        }
+        .content {
+          margin: 10px;
+          text-align: center;
+        }
+        .content img {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="tvmaze_assets/200201_01_tv_logo.png" alt="tv-logo" />
+    </header>
+    <main>
+      <div class="flex-container">
+        <div class="content">
+          <img src="tvmaze_assets/200201_02_pick_of_week.jpg" alt="pick-week" />
+        </div>
+        <div class="content" id="browse">
+          <img
+            src="tvmaze_assets/200201_03_popular_genre.png"
+            alt="popular-genre"
+          />
+          <div>
+            <ul>
+              <li>
+                <img src="tvmaze_assets/200201_04_scifi.png" alt="scifi" />
+              </li>
+              <li>
+                <img src="tvmaze_assets/200201_05_fantasy.png" alt="fantasy" />
+              </li>
+              <li>
+                <img src="tvmaze_assets/200201_06_crime.png" alt="crime" />
+              </li>
+              <li>
+                <img src="tvmaze_assets/200201_07_mystery.png" alt="mystery" />
+              </li>
+            </ul>
+          </div>
+          <img src="tvmaze_assets/200201_08_now_playing.jpg" alt="nowplaying" />
+        </div>
+      </div>
+      <div id="slider-container">
+        <img
+          src="tvmaze_assets/200201_09_tomorrow_schedule.png"
+          alt="tomorrow-schedule"
+        />
+        <div id="slider"></div>
+      </div>
+    </main>
+    <footer>&#169; TV Logo 2020 &nbsp; All Rights Reserved.</footer>
+
+    <script>
+      $.ajax(" http://api.tvmaze.com/schedule?country=US&date=2020-09-10", {
+        success: function (data, status, xhr) {
+          let i;
+          for (i = 0; i < 24; i++) {
+            $("#slider").append(
+              "<img src=" +
+                data[i].show.image.medium +
+                " alt=" +
+                data[i].show.name +
+                "></img>"
+            );
+          }
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          console.log("ERROR SCHEDULE AJAX CALL");
+        },
+      });
+    </script>
+
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#slider").slick({
+          lazyLoad: "ondemand",
+
+          slidesToShow: 6,
+          slidesToScroll: 3,
+          responsive: [
+            {
+              breakpoint: 1000,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+              },
+            },
+          ],
+        });
+      });
+    </script>
+  </body>
+</html>
